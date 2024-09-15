@@ -1,25 +1,29 @@
 import React from "react";
-import { useDraggable } from "@dnd-kit/core";
+import Icon from "./Icon";
+import { useDrag } from "react-dnd";
 
-const DraggableItem = ({ id, type, value, unit, icon, handleChange }) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: id,
-    data: { type, value, unit },
-  });
-  const style = transform && {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  };
+const DraggableBlock = ({ block }) => {
+  // useDrag hook sets up the drag source
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "BLOCK", // This must match the 'accept' type in the drop target
+    item: { block }, // The data that will be passed to the drop handler
+  }));
+
   return (
     <div
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={style}
-      className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
+      ref={drag}
+      className={`flex flex-row flex-wrap ${
+        block.color
+      } text-white px-2 py-1 my-2 text-sm cursor-pointer ${
+        isDragging ? "opacity-50" : ""
+      }`}
     >
-      {type}&nbsp;{icon}&nbsp;{unit}
+      {block.text}
+      {block.icon && (
+        <Icon name={block.icon} size={15} className="text-white mx-2" />
+      )}
     </div>
   );
 };
 
-export default DraggableItem;
+export default DraggableBlock
