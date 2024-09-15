@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import DraggableItem from "./DraggableItem";
 import Icon from "./Icon";
-
+const items = [
+  {
+    id: "1",
+    type: "Move",
+    unit: "steps",
+  },
+  {
+    id: "2",
+    type: "Turn",
+    unit: "degrees",
+    icon: <Icon name="undo" size={15} className="text-white mx-2" />,
+  },
+  {
+    id: "3",
+    type: "Turn",
+    unit: "degrees",
+    icon: <Icon name="redo" size={15} className="text-white mx-2" />,
+  },
+];
 export default function Sidebar() {
   return (
     <div className="w-60 flex-none h-full overflow-y-auto flex flex-col items-start p-2 border-r border-gray-200">
@@ -14,19 +33,15 @@ export default function Sidebar() {
         {"When this sprite clicked"}
       </div>
       <div className="font-bold"> {"Motion"} </div>
-      <div className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer">
-        {"Move 10 steps"}
-      </div>
-      <div className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer">
-        {"Turn "}
-        <Icon name="undo" size={15} className="text-white mx-2" />
-        {"15 degrees"}
-      </div>
-      <div className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer">
-        {"Turn "}
-        <Icon name="redo" size={15} className="text-white mx-2" />
-        {"15 degrees"}
-      </div>
+      {items.map((item) => (
+        <DraggableItem
+          key={item.id}
+          id={item.id}
+          type={item.type}
+          unit={item.unit}
+          icon={item.icon}
+        />
+      ))}
     </div>
   );
 }
