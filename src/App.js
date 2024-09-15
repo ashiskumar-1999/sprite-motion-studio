@@ -25,8 +25,8 @@ export default function App() {
 
   // Function to update commands for a specific sprite
   const updateSpriteCommands = useCallback((spriteId, newCommands) => {
-    console.log("Updating commands for sprite:", spriteId);
-    console.log("New commands:", newCommands);
+   /*  console.log("Updating commands for sprite:", spriteId);
+    console.log("New commands:", newCommands); */
 
     setSprites((prevSprites) =>
       prevSprites.map((sprite) =>
@@ -34,8 +34,8 @@ export default function App() {
       )
     );
   }, []);
-
-  console.log("Current sprites state:", sprites);
+/* 
+  console.log("Current sprites state:", sprites); */
 
   return (
     <DndProvider backend={HTML5Backend}>
