@@ -8,15 +8,39 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
       drop: (item) => {
         console.log("Item dropped:", item);
         console.log("Current sprite commands:", sprite.commands);
+        const newBlock = { ...item.block, value: item.block.value || 10 };
         // When a block is dropped, add it to the sprite's commands
-        const newCommands = [...sprite.commands, item.block];
+        const newCommands = [...sprite.commands, newBlock];
         console.log("New commands after drop:", newCommands);
         updateSpriteCommands(sprite.id, newCommands);
       },
     }),
     [sprite, updateSpriteCommands]
   );
+  const handleValueChange = (index, newValue) => {
+    const updatedCommands = [...sprite.commands];
+    updatedCommands[index].value = newValue === '' ? '' : parseInt(newValue, 10);
+    updateSpriteCommands(sprite.id, updatedCommands);
+  };
 
+  const formatedText = (command) => {
+    if(command.value !== undefined){
+      const commandText = command.text.split(/\d+/);
+      return(
+        <>
+        {commandText[0]}
+        <input
+              type="number"
+              value={command.value}
+              onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
+              className=" w-12 p-1 border text-black text-center rounded-lg"
+            />
+          {commandText[1]}
+          </>
+      )
+    }
+    return command.text
+  }
   return (
     <div
       ref={drop}
@@ -29,7 +53,7 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
           key={index}
           className={`${command.color} text-white px-2 py-1 my-2 text-sm`}
         >
-          {command.text}
+          {formatedText(command)}
         </div>
       ))}
     </div>
