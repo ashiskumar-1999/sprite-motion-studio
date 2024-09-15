@@ -23,21 +23,20 @@ const Sprite = ({ sprite, isAnimating }) => {
 
   // Function to execute a single command
   const executeCommand = (command) => {
-    console.log("command", command)
     return new Promise((resolve) => {
       setTimeout(() => {
         switch (command.id) {
           case "move_steps":
-            setPosition((prev) => ({ x: prev.x + command.value, y: prev.y }));
+            setPosition((prev) => ({ x: prev.x + 10, y: prev.y }));
             break;
           case "turn_left":
-            setRotation((prev) => prev - command.value);
+            setRotation((prev) => prev - 15);
             break;
           case "turn_right":
-            setRotation((prev) => prev + command.value);
+            setRotation((prev) => prev + 15);
             break;
           case "goto_xy":
-            setPosition({ x: command.value, y: command.value });
+            setPosition({ x: 0, y: 0 });
             break;
           default:
             break;

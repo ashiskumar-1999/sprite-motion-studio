@@ -6,42 +6,16 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
     () => ({
       accept: "BLOCK", // Only accept items of type 'BLOCK'
       drop: (item) => {
-       /*  console.log("Item dropped:", item);
-        console.log("Current sprite commands:", sprite.commands); */
-        const newBlock = { ...item.block, value: item.block.value || 10 };
+        console.log("Item dropped:", item);
+        console.log("Current sprite commands:", sprite.commands);
         // When a block is dropped, add it to the sprite's commands
-        const newCommands = [...sprite.commands, newBlock]; 
-        /*console.log("New commands after drop:", newCommands); */
+        const newCommands = [...sprite.commands, item.block];
+        console.log("New commands after drop:", newCommands);
         updateSpriteCommands(sprite.id, newCommands);
       },
     }),
     [sprite, updateSpriteCommands]
   );
-
-  const handleValueChange = (index, newValue) => {
-    const updatedCommands = [...sprite.commands];
-    updatedCommands[index].value = newValue;
-    updateSpriteCommands(sprite.id, updatedCommands);
-  };  
-
-  const formatedText = (command) => {
-    if(command.value !== undefined){
-      const commandText = command.text.split(/\d+/);
-      return(
-        <>
-        {commandText[0]}
-        <input
-              type="number"
-              value={command.value}
-              onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
-              className=" w-12 p-1 border text-black text-center rounded-lg"
-            />
-          {commandText[1]}
-          </>
-      )
-    }
-    return command.text
-  }
 
   return (
     <div
@@ -55,8 +29,7 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
           key={index}
           className={`${command.color} text-white px-2 py-1 my-2 text-sm`}
         >
-          {formatedText(command)}
-
+          {command.text}
         </div>
       ))}
     </div>
@@ -69,8 +42,8 @@ export default function DropArea({
   setSelectedSprite,
   updateSpriteCommands,
 }) {
- /*  console.log("MidArea render - Selected sprite:", selectedSprite);
-  console.log("MidArea render - Sprites:", sprites); */
+  console.log("MidArea render - Selected sprite:", selectedSprite);
+  console.log("MidArea render - Sprites:", sprites);
 
   return (
     <div className="flex-1 h-full overflow-auto flex flex-col">
