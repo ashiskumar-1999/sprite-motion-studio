@@ -19,6 +19,7 @@ const DraggableBlock = ({ block }) => {
       }`}
     >
       {block.text}
+      
       {block.icon && (
         <Icon name={block.icon} size={15} className="text-white mx-2" />
       )}

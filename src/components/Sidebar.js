@@ -1,5 +1,5 @@
 import React from "react";
-import DraggableBlock from './DraggableItem'
+import DraggableBlock from './DraggableBlock'
 
 export default function Sidebar() {
   const blocks = [
