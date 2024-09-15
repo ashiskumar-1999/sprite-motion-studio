@@ -6,12 +6,9 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
     () => ({
       accept: "BLOCK", // Only accept items of type 'BLOCK'
       drop: (item) => {
-        console.log("Item dropped:", item);
-        console.log("Current sprite commands:", sprite.commands);
         const newBlock = { ...item.block, value: item.block.value || 10 };
         // When a block is dropped, add it to the sprite's commands
         const newCommands = [...sprite.commands, newBlock];
-        console.log("New commands after drop:", newCommands);
         updateSpriteCommands(sprite.id, newCommands);
       },
     }),
@@ -66,9 +63,6 @@ export default function DropArea({
   setSelectedSprite,
   updateSpriteCommands,
 }) {
-  console.log("MidArea render - Selected sprite:", selectedSprite);
-  console.log("MidArea render - Sprites:", sprites);
-
   return (
     <div className="flex-1 h-full overflow-auto flex flex-col">
       <div className="flex mb-4">
