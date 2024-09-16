@@ -64,7 +64,7 @@ export default function DropArea({
   updateSpriteCommands,
 }) {
   return (
-    <div className="flex-1 h-full overflow-auto flex flex-col">
+    <div className="flex-1 h-full overflow-auto flex flex-col p-5">
       <div className="flex mb-4">
         {sprites.map((sprite) => (
           <button

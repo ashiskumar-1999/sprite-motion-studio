@@ -19,7 +19,7 @@ export default function App() {
     const newY = sprites[sprites.length -1].y + 50
     setSprites((prevSprites) => [
       ...prevSprites,
-      { id: newId, name: `Sprite ${newId}`, x: newX, y: newY, commands: [] },
+      { id: newId, name: `Sprite ${newId}`, x: newX, y: 0, commands: [] },
     ]);
   }, [sprites.length]);
 
