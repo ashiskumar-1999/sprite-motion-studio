@@ -9,6 +9,7 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
         const newBlock = { ...item.block, value: item.block.value || 10 };
         // When a block is dropped, add it to the sprite's commands
         const newCommands = [...sprite.commands, newBlock];
+        
         updateSpriteCommands(sprite.id, newCommands);
       },
     }),
@@ -26,12 +27,15 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
       return(
         <>
         {commandText[0]}
-        <input
-              type="number"
-              value={command.value}
-              onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
-              className=" w-12 p-1 border text-black text-center rounded-lg"
-            />
+        {command.category === "motion" && 
+         <input
+         type="number"
+         value={command.value}
+         onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
+         className=" w-12 p-1 border text-black text-center rounded-lg"
+       />
+        }
+       
           {commandText[1]}
           </>
       )
