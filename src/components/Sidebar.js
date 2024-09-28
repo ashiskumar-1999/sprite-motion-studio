@@ -26,8 +26,8 @@ export default function Sidebar() {
       category:"motion"
     },
     { id: "goto_xy", text: "Go to x: 0 y: 0", color: "bg-blue-500",category:"motion" },
-    { id: "repeat", text: "Repeat 10", color: "bg-orange-500",category:"motion" },
-    {id: "show_text", text: "Say Hi👋", color:"bg-purple-500"}
+   /*  { id: "repeat", text: "Repeat 10", color: "bg-orange-500",category:"motion" }, */
+    {id: "show_text", text: "Say Hi👋", color:"bg-purple-500", category:"text"}
   ];
 
   return (

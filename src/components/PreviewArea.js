@@ -32,7 +32,7 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
         switch (command.id) {
           case "show_text":
             setTooltip({
-              text: command.text,
+              text: command.value,
               position: { x: position.x + 10, y: position.y - 40 }, // Tooltip 30px above the sprite
             });
             break;
@@ -84,7 +84,8 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
               color: "#000000",
               padding: "10px",
               borderRadius: "5px",
-              fontSize: "12px",
+              fontSize: "18px",
+              textAlign:"center",
               transform: "translateX(-50%)",
             }}
         >
