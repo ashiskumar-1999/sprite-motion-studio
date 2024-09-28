@@ -53,8 +53,6 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
         }
         resolve();
       }, 500);
-      console.log("Position of the tooltipX:", tooltip.position.x)
-  console.log("Position of the tooltipY:", tooltip.position.y)
     });
   };
 

@@ -50,7 +50,7 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
          type="text"
          value={command.value}
          onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
-         className=" w-12 p-1 border text-black text-center rounded-lg"
+         className=" w-20 p-1 border text-black text-center rounded-lg"
        />
         }
        
