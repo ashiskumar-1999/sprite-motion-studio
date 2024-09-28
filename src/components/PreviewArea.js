@@ -7,6 +7,8 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
   const [position, setPosition] = useState({ x: sprite.x, y: sprite.y });
   const [rotation, setRotation] = useState(0);
   const [currentCommands, setCurrentCommands] = useState(sprite.commands);
+  const [tooltip, setTooltip] = useState({ text: "", position: {x:sprite.x, y:sprite.y}});
+  
 
 
   // Effect to animate the sprite when isAnimating becomes true
@@ -28,6 +30,12 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         switch (command.id) {
+          case "show_text":
+            setTooltip({
+              text: command.value,
+              position: { x: position.x + 10, y: position.y - 40 }, // Tooltip 30px above the sprite
+            });
+            break;
           case "move_steps":
             setPosition((prev) => ({ x: prev.x + command.value, y: prev.y }));
             break;
@@ -63,6 +71,25 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
       }}
     >
       <CatSprite />
+      {tooltip.text && tooltip.position && (
+        <div
+          role="tooltip"
+          style={{
+              left: `${tooltip.position.x}px`,
+              top: `${tooltip.position.y}px`, // Position tooltip above the sprite
+              border:"2px solid",
+              borderColor:"#94A3B8",
+              color: "#000000",
+              padding: "10px",
+              borderRadius: "5px",
+              fontSize: "18px",
+              textAlign:"center",
+              transform: "translateX(-50%)",
+            }}
+        >
+          {tooltip.text}
+        </div>
+      )}
     </div>
   );
 };
@@ -104,7 +131,6 @@ export default function PreviewArea({ sprites, addSprite }) {
   },[positions])
 
   useEffect(() => {
-    
     if(isAnimating){
       const interval = setInterval(() => {
       for(let i = 1; i<sprites.length; i++) {

@@ -8,7 +8,7 @@ import PreviewArea from "./components/PreviewArea";
 export default function App() {
   // State to store all sprites
   const [sprites, setSprites] = useState([
-    { id: 1, name: "Sprite 1", x: 0, y: 0, commands: [] },
+    { id: 1, name: "Sprite 1", x: 100, y: 100, commands: [] },
   ]);
   const [selectedSprite, setSelectedSprite] = useState(1); // State to keep track of which sprite is currently selected
 
@@ -19,7 +19,7 @@ export default function App() {
     const newY = sprites[sprites.length -1].y + 50
     setSprites((prevSprites) => [
       ...prevSprites,
-      { id: newId, name: `Sprite ${newId}`, x: newX, y: 0, commands: [] },
+      { id: newId, name: `Sprite ${newId}`, x: newX, y: newY, commands: [] },
     ]);
   }, [sprites.length]);
 

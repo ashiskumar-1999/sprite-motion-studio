@@ -12,7 +12,7 @@ const DraggableBlock = ({ block }) => {
   return (
     <div
       ref={drag}
-      className={`flex flex-row flex-wrap ${
+      className={`flex flex-row flex-wrap rounded-md ${
         block.color
       } text-white px-2 py-1 my-2 text-sm cursor-pointer ${
         isDragging ? "opacity-50" : ""

@@ -6,7 +6,9 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
     () => ({
       accept: "BLOCK", // Only accept items of type 'BLOCK'
       drop: (item) => {
-        const newBlock = { ...item.block, value: item.block.value || 10 };
+        const text = item.block.text.split(" ");
+        const defaultBlockValue = item.block.category === "motion" ? 10 : text[1]
+        const newBlock = { ...item.block, value: item.block.value || defaultBlockValue };
         // When a block is dropped, add it to the sprite's commands
         const newCommands = [...sprite.commands, newBlock];
         updateSpriteCommands(sprite.id, newCommands);
@@ -16,23 +18,43 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
   );
   const handleValueChange = (index, newValue) => {
     const updatedCommands = [...sprite.commands];
-    updatedCommands[index].value = newValue === '' ? '' : parseInt(newValue, 10);
+    if(newValue !== ''){
+      if(!isNaN(newValue)){
+        updatedCommands[index].value = parseInt(newValue, 10)
+      }
+      else{
+        updatedCommands[index].value = newValue
+      }
+    }else{
+      updatedCommands[index].value=""
+    }
+    /* 
+    updatedCommands[index].value = newValue === '' ? '' : parseInt(newValue, 10); */
     updateSpriteCommands(sprite.id, updatedCommands);
   };
 
   const formatedText = (command) => {
     if(command.value !== undefined){
-      const commandText = command.text.split(/\d+/);
+      const commandText = command.category === "text"?command.text.split(" "):command.text.split(/\d+/)
       return(
         <>
-        {commandText[0]}
-        <input
-              type="number"
-              value={command.value}
-              onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
-              className=" w-12 p-1 border text-black text-center rounded-lg"
-            />
-          {commandText[1]}
+        {commandText[0]} &nbsp;
+        {command.category === "motion" ?
+         <input
+         type="number"
+         value={command.value}
+         onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
+         className=" w-12 p-1 border text-black text-center rounded-lg"
+       />: command.category === "text" &&
+       <input
+         type="text"
+         value={command.value}
+         onChange={(e) => handleValueChange(sprite.commands.indexOf(command), e.target.value)}
+         className=" w-20 p-1 border text-black text-center rounded-lg"
+       />
+        }
+       
+          {command.category === 'motion' && commandText[1]}
           </>
       )
     }
@@ -41,14 +63,14 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
   return (
     <div
       ref={drop}
-      className="flex-1 h-full p-4 border-2 border-dashed border-gray-300 overflow-y-auto"
+      className="flex-1 h-full p-4 border-2 border-dashed border-gray-300  overflow-y-auto"
     >
       <h2 className="text-lg font-bold mb-4">{sprite.name} Commands</h2>
       {/* Display all commands for the current sprite */}
       {sprite.commands.map((command, index) => (
         <div
           key={index}
-          className={`${command.color} text-white px-2 py-1 my-2 text-sm`}
+          className={`${command.color} text-white px-2 py-1 my-2 text-sm rounded-md`}
         >
           {formatedText(command)}
         </div>
