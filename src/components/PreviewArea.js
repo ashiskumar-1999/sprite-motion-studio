@@ -12,7 +12,6 @@ const Sprite = ({ sprite, isAnimating,updatePosition}) => {
   // Effect to animate the sprite when isAnimating becomes true
   useEffect(() => {
     if (isAnimating) {
-      console.log("CurrentCommands in PreView Area:", currentCommands)
       animateSprite(currentCommands);
     }
   }, [isAnimating, currentCommands]);
