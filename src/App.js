@@ -11,6 +11,7 @@ export default function App() {
     { id: 1, name: "Sprite 1", x: 100, y: 100, commands: [] },
   ]);
   const [selectedSprite, setSelectedSprite] = useState(1); // State to keep track of which sprite is currently selected
+  const [isAnimating, setIsAnimating] = useState(false);// State to control when sprites should be animating
 
   // Function to add a new sprite
   const addSprite = useCallback(() => {
@@ -22,6 +23,18 @@ export default function App() {
       { id: newId, name: `Sprite ${newId}`, x: newX, y: newY, commands: [] },
     ]);
   }, [sprites.length]);
+
+  // Function to start the animation of all sprites
+  const handlePlay = () => {
+    setIsAnimating(true);
+    // Reset animation state after all sprites have finished animating
+    setTimeout(
+      () => setIsAnimating(false),
+      sprites.length * sprites[0].commands.length * 500
+    );
+  };
+
+  
 
   // Function to update commands for a specific sprite
   const updateSpriteCommands = useCallback((spriteId, newCommands) => {
@@ -46,10 +59,11 @@ export default function App() {
               selectedSprite={selectedSprite}
               setSelectedSprite={setSelectedSprite}
               updateSpriteCommands={updateSpriteCommands}
+              handlePlay={handlePlay} //passed handlePlay as a prop
             />
           </div>
           <div className="w-1/3 h-screen overflow-hidden flex flex-row bg-white border-t border-l border-gray-200 rounded-tl-xl ml-2">
-          <PreviewArea sprites={sprites} addSprite={addSprite} />
+          <PreviewArea sprites={sprites} addSprite={addSprite} handleAnimation={handlePlay} isAnimating={isAnimating}/>
           </div>
         </div>
       </div>

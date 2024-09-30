@@ -1,7 +1,7 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 
-const DroppableArea = ({ sprite, updateSpriteCommands }) => {
+const DroppableArea = ({ sprite, updateSpriteCommands, handlePlay }) => {
   const [, drop] = useDrop(
     () => ({
       accept: "BLOCK", // Only accept items of type 'BLOCK'
@@ -67,14 +67,22 @@ const DroppableArea = ({ sprite, updateSpriteCommands }) => {
     >
       <h2 className="text-lg font-bold mb-4">{sprite.name} Commands</h2>
       {/* Display all commands for the current sprite */}
-      {sprite.commands.map((command, index) => (
+      {sprite.commands.map((command, index) => 
+      command.category ==='events' ? 
+      <button 
+        key={index} 
+        className={`${command.color} w-full text-white px-2 py-1 my-2 text-sm text-left rounded-md`} 
+        onClick={handlePlay}
+      >
+          {formatedText(command)}
+      </button> :
         <div
           key={index}
           className={`${command.color} text-white px-2 py-1 my-2 text-sm rounded-md`}
         >
           {formatedText(command)}
         </div>
-      ))}
+      )}
     </div>
   );
 };
@@ -84,6 +92,7 @@ export default function DropArea({
   selectedSprite,
   setSelectedSprite,
   updateSpriteCommands,
+  handlePlay
 }) {
   return (
     <div className="flex-1 h-full overflow-auto flex flex-col p-5">
@@ -105,6 +114,7 @@ export default function DropArea({
       <DroppableArea
         sprite={sprites.find((s) => s.id === selectedSprite)}
         updateSpriteCommands={updateSpriteCommands}
+        handlePlay={handlePlay}
       />
     </div>
   );
