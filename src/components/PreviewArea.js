@@ -2,14 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import CatSprite from "./CatSprite";
 
 // Sprite component represents a single sprite in the preview area
-const Sprite = ({ sprite, isAnimating,updatePosition }) => {
+const Sprite = ({ sprite, isAnimating,updatePosition}) => {
   // State to manage the sprite's position and rotation
   const [position, setPosition] = useState({ x: sprite.x, y: sprite.y });
   const [rotation, setRotation] = useState(0);
   const [currentCommands, setCurrentCommands] = useState(sprite.commands);
   const [tooltip, setTooltip] = useState({ text: "", position: {x:sprite.x, y:sprite.y}});
-  
-
 
   // Effect to animate the sprite when isAnimating becomes true
   useEffect(() => {
@@ -94,21 +92,8 @@ const Sprite = ({ sprite, isAnimating,updatePosition }) => {
   );
 };
 
-export default function PreviewArea({ sprites, addSprite }) {
-  // State to control when sprites should be animating
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [positions, setPositions] = useState({}) //State to store the position cordinate of each sprit
-
-  // Function to start the animation of all sprites
-  const handlePlay = () => {
-    setIsAnimating(true);
-    // Reset animation state after all sprites have finished animating
-    setTimeout(
-      () => setIsAnimating(false),
-      sprites.length * sprites[0].commands.length * 500
-    );
-  };
-
+export default function PreviewArea({ sprites, addSprite, handleAnimation, isAnimating }) { 
+  const [positions, setPositions] = useState({}) //State to store the position cordinate of each sprite
   
   const CheckingCollision = useCallback((sprite1,sprite2) =>{
     const FirstSpritePositions = positions[sprite1.id];
@@ -161,7 +146,7 @@ export default function PreviewArea({ sprites, addSprite }) {
       <div className="flex justify-between items-center mt-4 px-4">
         <button
           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-          onClick={handlePlay}
+          onClick={handleAnimation}
           disabled={isAnimating}
         >
           {isAnimating ? "Playing..." : "Play"}
